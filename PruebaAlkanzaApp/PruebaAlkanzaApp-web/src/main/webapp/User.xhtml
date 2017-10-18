@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="template/layout.xhtml"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="source">
+        <h:form>
+            <p:growl id="gralGrowl" />
+            <p:panel header="Register New User" style="width: 450px;">
+            <h:panelGrid columns="2" cellpadding="4">
+                <h:outputText value="Name: " />
+                <p:inputText id="txtname" value="#{userBean.newUser.name}" required="true" requiredMessage="Please type name" />
+
+                <h:outputText value="NickName: " />
+                <p:inputText id="txtnick" value="#{userBean.newUser.nick}" required="true" requiredMessage="Please type NickName" />
+                
+                <h:outputText value="Role " />
+                <p:selectOneMenu value="#{userBean.newUser.idrole}" converter="#{roleConverter}">
+                    <f:selectItems value="#{userBean.roles}" var="role" itemLabel="#{role.role}" itemValue="#{role}" />
+                </p:selectOneMenu>
+
+                <p:commandButton value="Submit" action="#{userBean.actionEvent}" update="gralGrowl txtname txtnick" />
+            </h:panelGrid>
+        </p:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>
