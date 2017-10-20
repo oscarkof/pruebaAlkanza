@@ -5,31 +5,35 @@
                 xmlns:f="http://xmlns.jcp.org/jsf/core"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="source">
-        <h:form>
-            
+        <h:form id="mainForm">
+            <p:growl id="gralGrowl" />
             <h:panelGrid columns="2" >
                 <h:outputText value="Login Name: " />
                 <p:autoComplete id="themePojo" value="#{managementBean.localuser}" completeMethod="#{managementBean.completeUser}"
-                                var="user" itemLabel="#{user.name}" itemValue="#{user}" converter="#{userConverter}" forceSelection="true" />
+                                var="user" itemLabel="#{user.name}" itemValue="#{user}" converter="#{userConverter}" forceSelection="true">
+                    <p:ajax event="itemSelect" process="lbltext mainForm:lbltext @this" listener="#{managementBean.handleSelect}" partialSubmit="true" update="mainForm:container container"  />
+                </p:autoComplete>
             </h:panelGrid>
             <br/>
             <br/>
-            <p:outputLabel value="Select your preference!!" />
-            <h:panelGrid columns="2" >
-                <h:commandLink action="#{managementBean.eventOption1()}" >
-                    <f:ajax execute="@this" render="@this" />
-                    <h:graphicImage style="width: 450px; height: 200px;" value="https://splashbase.s3.amazonaws.com/snapwiresnaps/regular/tumblr_oa5z31w3371teue7jo1_1280.jpg" />
-                </h:commandLink>
-                
-                <h:commandLink action="#{managementBean.eventOption2}" >
-                    <f:ajax execute="@this" render="@this" />
-                    <h:graphicImage style="width: 450px; height: 200px;" value="https://splashbase.s3.amazonaws.com/travelcoffeebook/regular/tumblr_nx5cgd4aWr1ta0hnbo1_1280.jpg" />
-                </h:commandLink>
-                
-                <h:outputText value="Option A" />
-                <h:outputText value="Option B" />
-                
-            </h:panelGrid>
+            <h:panelGroup id="container"  >
+                <p:outputLabel id="lbltext" value="Select your preference!!" rendered="#{managementBean.localuser ne null}" />
+                <p:panelGrid style="border: 0px;" columns="2" id="panelGridImages" rendered="#{managementBean.localuser ne null}" >
+                    <h:commandLink id="cmd1" action="#{managementBean.eventOption1}"  >
+                        <p:ajax process="@this" update=":mainForm:img1 :mainForm:img2 gralGrowl" />
+                        <p:graphicImage id="img1" style="width: 400px; height: 200px;" value="#{managementBean.imgOption1}" />
+                    </h:commandLink>
+
+                    <h:commandLink id="cmd2" action="#{managementBean.eventOption2}"  >
+                        <p:ajax process="@this"  update=":mainForm:img1 :mainForm:img2 gralGrowl" />
+                        <p:graphicImage id="img2" style="width: 400px; height: 200px;" value="#{managementBean.imgOption2}" />
+                    </h:commandLink>
+
+                    <h:outputText value="Option A" />
+                    <h:outputText value="Option B" />
+
+                </p:panelGrid>
+            </h:panelGroup>
         </h:form>
     </ui:define>
 

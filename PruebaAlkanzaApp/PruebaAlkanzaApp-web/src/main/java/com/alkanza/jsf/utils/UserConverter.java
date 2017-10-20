@@ -25,7 +25,7 @@ public class UserConverter implements Converter {
                 UserServiceData service = (UserServiceData) fc.getExternalContext().getSessionMap().get("userServiceData");
                 User tmprole = new User();
                 for (User userIt : service.getUsers()) {
-                    if(Objects.equals(userIt.getIdrole(), Integer.parseInt(value))){
+                    if(Objects.equals(userIt.getIduser(), Integer.parseInt(value))){
                         tmprole = userIt;
                     }
                 }

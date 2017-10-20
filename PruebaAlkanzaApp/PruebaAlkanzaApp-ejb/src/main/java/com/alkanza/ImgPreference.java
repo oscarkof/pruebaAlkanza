@@ -43,7 +43,7 @@ public class ImgPreference implements Serializable {
     @Size(max = 45)
     @Column(name = "img_filename")
     private String imgFilename;
-    @Size(max = 45)
+    @Size(max = 300)
     @Column(name = "img_url")
     private String imgUrl;
     @JoinColumn(name = "iduser", referencedColumnName = "iduser")
